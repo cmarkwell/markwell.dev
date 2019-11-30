@@ -2,7 +2,6 @@
 Source for my personal website!
 
 ## Ideas
-* Use web components
 * Hackathon hex grid, link to devpost article
 * Blog section
 * Social media links
