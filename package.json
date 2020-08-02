@@ -1,0 +1,29 @@
+{
+  "name": "markwell.dev",
+  "version": "1.0.0",
+  "description": "Source for my personal website",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node -r dotenv/config src/js/server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cmarkwell/markwell.dev.git"
+  },
+  "author": "Connor Markwell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cmarkwell/markwell.dev/issues"
+  },
+  "homepage": "https://github.com/cmarkwell/markwell.dev#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "sass": "^1.26.10"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "three": "^0.119.1"
+  }
+}

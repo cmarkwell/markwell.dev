@@ -1,0 +1,4 @@
+{
+    "includePaths": ["node_nodules/"],
+    "outputStyle": "nested",
+}
