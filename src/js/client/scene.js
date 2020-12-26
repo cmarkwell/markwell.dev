@@ -1,39 +1,73 @@
 import * as THREE from 'three';
 
 export default class Scene {
-    canvas
+    static clock = new THREE.Clock();
+
+    /**
+     * Instance variables
+     */
+    canvas;
+    options;
     scene;
     camera;
     renderer;
+    sceneObjects;
 
-    constructor(canvas) {
+    /**
+     * Scene constructor
+     * @param {string} canvas Selector for canvas element. E.g., #can or .can
+     * @param {object} [options] Options to define scene behavior in some ways
+     */
+    constructor(canvas, options) {
         this.canvas = document.querySelector(canvas);
-        this.init();
+        this.options = options;
     }
     
+    /**
+     * Initialize a scene. 
+     */
     init = () => {
-        const { innerWidth, innerHeight } = this.canvas;
-
-        // Set up scene, main camera, and renderer
+        const { clientWidth, clientHeight } = this.canvas;
         this.scene = new THREE.Scene();
-        this.camera = new THREE.PerspectiveCamera(75, innerWidth / innerHeight);
+        this.camera = new THREE.PerspectiveCamera(75, clientWidth / clientHeight);
         this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
-
-        // Window even listeners
-        window.addEventListener('resize', this.onWindowResize, false);
+        this.camera.position.z = 5;
     }
 
-    onWindowResize = () => {
-        const { innerWidth, innerHeight } = this.canvas;
+    /**
+     * Resize the Scene's canvas to the display size
+     * @returns {boolean} If a resize operation was performed
+     */
+    resizeToDisplay = () => {
+        const { 
+            clientWidth, clientHeight, 
+            width: cWidth, height: cHeight, 
+        } = this.canvas;
+        const dpr = window.devicePixelRatio;
+        const width = clientWidth * dpr | 0;
+        const height = clientHeight * dpr | 0;
+        const needResize = cWidth !== width || cHeight !== height;
 
-        // Redraw canvas with updated aspect ratio and size
-        this.camera.aspect = innerWidth / innerHeight;
-        this.camera.updateProjectionMatrix();
-        this.renderer.setSize(innerWidth, innerHeight);
+        if (needResize) {
+            this.renderer.setSize(width, height, false);
+        }
+
+        return needResize;
     }
 
-    animate = () => {
-        requestAnimationFrame(this.animate);
+    /**
+     * Kickoff and continue the Scene's animation
+     */
+    update = () => {
+        const delta = Scene.clock.getDelta();
+
+        if (this.resizeToDisplay()) {
+            const { clientWidth, clientHeight } = this.canvas;
+            this.camera.aspect = clientWidth / clientHeight;
+            this.camera.updateProjectionMatrix();
+        }
+
+        this.sceneObjects.forEach(obj => obj.update(delta));
         this.renderer.render(this.scene, this.camera);
     }
 }

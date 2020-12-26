@@ -1,4 +1,11 @@
 import Scene from './scene';
 
 let scene = new Scene('#renderCanvas');
-scene.animate();
+scene.init();
+
+function loop() {
+    scene.update();
+    requestAnimationFrame(loop);
+}
+
+loop();
