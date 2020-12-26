@@ -1,5 +1,4 @@
-import World from './world.js';
+import Scene from './scene';
 
-let world = new World('#renderCanvas');
-world.init();
-world.animate();
+let scene = new Scene('#renderCanvas');
+scene.animate();
