@@ -37,7 +37,7 @@ export default class Scene {
         this.sceneObjects = [];
     }
 
-    addObject(object) {
+    addSceneObject(object) {
         this.sceneObjects.push(object)
         this.scene.add(object.mesh);
     }

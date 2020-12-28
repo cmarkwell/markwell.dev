@@ -17,6 +17,7 @@ bundler.on('bundled', async () => {
         isListening = true;
         server = await app.listen(PORT, HOST);
     }
+    
     const { address, port } = server.address();
     console.log(
         '👂 Listening to http://%s:%s',

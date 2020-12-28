@@ -18,15 +18,16 @@ export default class MeshObject {
      * @param {number} delta Time elapsed since last update call
      */
     update(delta) {
-        switch (this.options.animation) {
+        const { animation, speed = 1 } = this.options
+        switch (animation) {
             case Animations.SPINX:
-                this.mesh.rotation.x += delta;
+                this.mesh.rotation.x += delta * speed;
                 break;
             case Animations.SPINY:
-                this.mesh.rotation.y += delta;
+                this.mesh.rotation.y += delta * speed;
                 break;
             case Animations.SPINZ:
-                this.mesh.rotation.z += delta;
+                this.mesh.rotation.z += delta * speed;
                 break;
             default:
                 break;
