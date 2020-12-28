@@ -14,31 +14,39 @@ export default class Scene {
     sceneObjects;
 
     /**
-     * Scene constructor
+     * Scene constructor. Select canvas and initialize scene.
      * @param {string} canvas Selector for canvas element. E.g., #can or .can
      * @param {object} [options] Options to define scene behavior in some ways
      */
-    constructor(canvas, options) {
+    constructor(canvas, options = {}) {
         this.canvas = document.querySelector(canvas);
         this.options = options;
+        this.init();
     }
     
     /**
-     * Initialize a scene. 
+     * Initialize a scene. Also acts as a "reset" operation.
      */
-    init = () => {
+    init() {
         const { clientWidth, clientHeight } = this.canvas;
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(75, clientWidth / clientHeight);
         this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
         this.camera.position.z = 5;
+
+        this.sceneObjects = [];
+    }
+
+    addObject(object) {
+        this.sceneObjects.push(object)
+        this.scene.add(object.mesh);
     }
 
     /**
      * Resize the Scene's canvas to the display size
      * @returns {boolean} If a resize operation was performed
      */
-    resizeToDisplay = () => {
+    resizeToDisplay() {
         const { 
             clientWidth, clientHeight, 
             width: cWidth, height: cHeight, 
@@ -58,7 +66,7 @@ export default class Scene {
     /**
      * Kickoff and continue the Scene's animation
      */
-    update = () => {
+    update() {
         const delta = Scene.clock.getDelta();
 
         if (this.resizeToDisplay()) {
@@ -67,7 +75,7 @@ export default class Scene {
             this.camera.updateProjectionMatrix();
         }
 
-        this.sceneObjects.forEach(obj => obj.update(delta));
+        this.sceneObjects.forEach(object => object.update(delta));
         this.renderer.render(this.scene, this.camera);
     }
 }

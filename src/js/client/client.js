@@ -1,7 +1,6 @@
-import Scene from './scene';
+import LandingScene from './landingScene';
 
-let scene = new Scene('#renderCanvas');
-scene.init();
+let scene = new LandingScene('#renderCanvas');
 
 function loop() {
     scene.update();
