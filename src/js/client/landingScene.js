@@ -24,11 +24,17 @@ export default class LandingScene extends Scene {
 
         // Create text geometry and material
         const geometry = new THREE.TextGeometry('Hi!', { font: font, size: 5, height: 1 });
-        const material = new THREE.MeshBasicMaterial({ color: 0x00DEAD });
+        geometry.center();
+        const material = new THREE.MeshPhongMaterial({ color: 0x00DEAD });
         const text = new THREE.Mesh(geometry, material);
 
         // Add text to scene objects
-        const mo = new MeshObject(text, { animation: Animations.SPINY, speed: 0.5 });
+        const mo = new MeshObject(text, { animation: Animations.SPINY, speed: 0.25 });
         this.addSceneObject(mo);
+
+        // Add PointLight to scene
+        const light = new THREE.PointLight(0xFFFFFF, 1, 100);
+        light.position.set(10, 10, 10);
+        this.scene.add(light);
     }
 }
